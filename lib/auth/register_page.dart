@@ -93,32 +93,27 @@ class _RegisterPageState extends State<RegisterPage> {
                         hintStyle: Styles.subtitle,
                         enabledBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Colors.grey, // Border color when enabled
+                            color: Colors.grey,
                           ),
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(10)), // Add border radius
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: primaryColor, // Border color when focused
+                            color: primaryColor,
                           ),
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(10)), // Add border radius
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         errorBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Colors
-                                .red, // Border color when there's an error
+                            color: Colors.red,
                           ),
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(10)), // Add border radius
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         disabledBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Colors.grey, // Border color when disabled
+                            color: Colors.grey,
                           ),
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(10)), // Add border radius
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                       ),
                     ),

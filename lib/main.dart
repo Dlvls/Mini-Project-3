@@ -52,14 +52,11 @@ class MainApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) => ProductRepository(),
         ),
-
-        // Firestore Repositories
         RepositoryProvider(
           create: (context) => FirestoreProductRepository(firestore),
         ),
         RepositoryProvider(
-          create: (context) =>
-              FirestoreRepository(), // Ensure this does not require arguments
+          create: (context) => FirestoreRepository(),
         ),
         RepositoryProvider(
           create: (context) => FirestoreProfileRepository(),
@@ -67,7 +64,6 @@ class MainApp extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
-          // API BLoCs
           BlocProvider(
             create: (context) => AuthBloc(),
           ),
@@ -81,8 +77,6 @@ class MainApp extends StatelessWidget {
                 ProductsBloc(RepositoryProvider.of<ProductRepository>(context))
                   ..add(LoadProductsEvent()),
           ),
-
-          // Firestore BLoCs
           BlocProvider(
             create: (context) => FirestoreProductsBloc(
                 RepositoryProvider.of<FirestoreProductRepository>(context)),
@@ -93,8 +87,7 @@ class MainApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => FirestoreProfileBloc(
-                RepositoryProvider.of<FirestoreProfileRepository>(
-                    context)), // Add this line
+                RepositoryProvider.of<FirestoreProfileRepository>(context)),
           ),
           BlocProvider(
             create: (context) => ProfileImageCubit(),

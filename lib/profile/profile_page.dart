@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:miniproject3/data/firestore/bloc/profile/f_profile_event.dart';
 
@@ -62,132 +63,139 @@ class _ProfilePageState extends State<ProfilePage> {
           } else if (profileState is FirestoreProfileLoaded) {
             final profile = profileState.profile;
 
-            return SingleChildScrollView(
-              child: Container(
-                color: secondaryColor,
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        ClipOval(
-                          child: Container(
-                            width: 100,
-                            height: 100,
-                            color: Colors.grey.shade200,
-                            child: BlocBuilder<ProfileImageCubit,
-                                ProfileImageState>(
-                              builder: (context, imageState) {
-                                if (imageState.isLoading) {
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                } else if (imageState.profileImageUrl == null) {
-                                  return Image.asset(
-                                    "assets/images/profile_image.jpg",
-                                    fit: BoxFit.cover,
-                                  );
-                                } else {
-                                  return Image.network(
-                                    imageState.profileImageUrl!,
-                                    fit: BoxFit.cover,
-                                  );
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 16.0),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+            return Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      color: secondaryColor,
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
                             children: [
-                              Text(
-                                "${profile.name.firstname} ${profile.name.lastname}",
-                                style: Styles.title,
-                              ),
-                              const SizedBox(height: 8.0),
-                              Text(
-                                profile.username,
-                                style: Styles.subtitle
-                                    .copyWith(color: secondaryText),
-                              ),
-                              const SizedBox(height: 8.0),
-                              Row(
-                                children: [
-                                  const Icon(Icons.location_on),
-                                  const SizedBox(width: 4.0),
-                                  Text(
-                                    profile.address.city,
-                                    style: Styles.title.copyWith(
-                                        fontWeight: FontWeight.normal),
+                              ClipOval(
+                                child: Container(
+                                  width: 100,
+                                  height: 100,
+                                  color: Colors.grey.shade200,
+                                  child: BlocBuilder<ProfileImageCubit,
+                                      ProfileImageState>(
+                                    builder: (context, imageState) {
+                                      if (imageState.isLoading) {
+                                        return const Center(
+                                            child: CircularProgressIndicator());
+                                      } else if (imageState.profileImageUrl ==
+                                          null) {
+                                        return Image.asset(
+                                          "assets/images/profile_image.jpg",
+                                          fit: BoxFit.cover,
+                                        );
+                                      } else {
+                                        return Image.network(
+                                          imageState.profileImageUrl!,
+                                          fit: BoxFit.cover,
+                                        );
+                                      }
+                                    },
                                   ),
-                                ],
+                                ),
+                              ),
+                              const SizedBox(width: 16.0),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${profile.name.firstname} ${profile.name.lastname}",
+                                      style: Styles.title,
+                                    ),
+                                    const SizedBox(height: 8.0),
+                                    Text(
+                                      profile.username,
+                                      style: Styles.subtitle
+                                          .copyWith(color: secondaryText),
+                                    ),
+                                    const SizedBox(height: 8.0),
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.location_on),
+                                        const SizedBox(width: 4.0),
+                                        Text(
+                                          profile.address.city,
+                                          style: Styles.title.copyWith(
+                                              fontWeight: FontWeight.normal),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 32.0),
-                    Row(
-                      children: [
-                        const Icon(Icons.email),
-                        const SizedBox(width: 8.0),
-                        Text(profile.email, style: Styles.subtitle),
-                      ],
-                    ),
-                    const SizedBox(height: 8.0),
-                    const Divider(),
-                    const SizedBox(height: 8.0),
-                    Row(
-                      children: [
-                        const Icon(Icons.phone),
-                        const SizedBox(width: 8.0),
-                        Text(
-                          profile.phone,
-                          style: Styles.subtitle,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8.0),
-                    const Divider(),
-                    const SizedBox(height: 8.0),
-                    Row(
-                      children: [
-                        const Icon(Icons.home),
-                        const SizedBox(width: 8.0),
-                        Expanded(
-                          child: Text(
-                            '${profile.address.street} ${profile.address.number}, ${profile.address.zipcode}',
-                            style: Styles.subtitle,
+                          const SizedBox(height: 32.0),
+                          Row(
+                            children: [
+                              const Icon(Icons.email),
+                              const SizedBox(width: 8.0),
+                              Text(profile.email, style: Styles.subtitle),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 32.0),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Add functionality if needed
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: primaryColor,
-                          minimumSize: const Size(double.infinity, 45),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                          const SizedBox(height: 8.0),
+                          const Divider(),
+                          const SizedBox(height: 8.0),
+                          Row(
+                            children: [
+                              const Icon(Icons.phone),
+                              const SizedBox(width: 8.0),
+                              Text(
+                                profile.phone,
+                                style: Styles.subtitle,
+                              ),
+                            ],
                           ),
-                        ),
-                        child: Text(
-                          'Logout',
-                          style: Styles.title.copyWith(color: Colors.white),
-                        ),
+                          const SizedBox(height: 8.0),
+                          const Divider(),
+                          const SizedBox(height: 8.0),
+                          Row(
+                            children: [
+                              const Icon(Icons.home),
+                              const SizedBox(width: 8.0),
+                              Expanded(
+                                child: Text(
+                                  '${profile.address.street} ${profile.address.number}, ${profile.address.zipcode}',
+                                  style: Styles.subtitle,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 32.0),
+                        ],
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      context.go('/login');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColor,
+                      minimumSize: const Size(double.infinity, 45),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Text(
+                      'Logout',
+                      style: Styles.title.copyWith(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
             );
           } else if (profileState is FirestoreProfileError) {
             return Center(child: Text(profileState.error));

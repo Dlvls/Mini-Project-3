@@ -21,22 +21,23 @@ class LoginPage extends StatelessWidget {
       body: SafeArea(
         child: BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
-            if (state.errorMessage != null) {
+            if (state.errorMessage.isNotEmpty) {
               Fluttertoast.showToast(
-                msg: state.errorMessage!,
+                msg: state.errorMessage,
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.red,
+                backgroundColor: Colors.black,
                 textColor: Colors.white,
                 fontSize: 16.0,
               );
             }
+
             if (state.userData != null) {
               Fluttertoast.showToast(
                 msg: 'Login successful!',
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.green,
+                backgroundColor: Colors.black,
                 textColor: Colors.white,
                 fontSize: 16.0,
               );
@@ -146,12 +147,9 @@ class LoginPage extends StatelessWidget {
                       ),
                       obscureText: true,
                     ),
-                    const SizedBox(
-                      height: 48,
-                    ),
+                    const SizedBox(height: 48),
                     Column(
                       children: [
-                        const SizedBox(height: 8),
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(

@@ -192,7 +192,6 @@ class _CheckOutPageState extends State<CheckOutPage> {
                         color: cardColor,
                         child: Image.asset(
                           'assets/images/master_card.png',
-                          // Set the size of the icon if needed
                         ),
                       ),
                       const SizedBox(width: 16),

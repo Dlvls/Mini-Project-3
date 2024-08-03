@@ -142,9 +142,9 @@ class _CartPageState extends State<CartPage> {
                             List<FirestoreProductQuantity> quantity =
                                 cart.products;
 
-                            // Create a map for quick lookup
                             final productMap = {
-                              for (var product in products) product.id: product
+                              for (var product in products)
+                                product.id.toString(): product
                             };
 
                             return Column(
@@ -154,19 +154,19 @@ class _CartPageState extends State<CartPage> {
                                     itemCount: quantity.length,
                                     itemBuilder: (context, index) {
                                       final cartProduct = quantity[index];
-                                      final product =
-                                          productMap[cartProduct.productId] ??
-                                              FirestoreProductModel(
-                                                documentId: '',
-                                                id: '0',
-                                                title: 'Unknown',
-                                                image: '',
-                                                description: '',
-                                                price: 0.0,
-                                                rating:
-                                                    Rating(rate: 0.0, count: 0),
-                                                category: '',
-                                              );
+                                      final product = productMap[cartProduct
+                                              .productId
+                                              .toString()] ??
+                                          FirestoreProductModel(
+                                            documentId: '',
+                                            id: '0',
+                                            title: 'Unknown',
+                                            image: '',
+                                            description: '',
+                                            price: 0.0,
+                                            rating: Rating(rate: 0.0, count: 0),
+                                            category: '',
+                                          );
 
                                       print('Product ID: ${product.id}');
                                       print('Product Title: ${product.title}');
@@ -188,7 +188,9 @@ class _CartPageState extends State<CartPage> {
                                               CheckboxApp(
                                                 onChanged: (isChecked) {
                                                   _onItemChecked(
-                                                    cartProduct.productId,
+                                                    int.parse(cartProduct
+                                                        .productId
+                                                        .toString()),
                                                     isChecked,
                                                     product.price,
                                                     cartProduct.quantity,

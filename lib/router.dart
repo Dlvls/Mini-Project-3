@@ -15,7 +15,7 @@ import 'try.dart';
 
 GoRouter createRouter() {
   return GoRouter(
-    initialLocation: '/home',
+    initialLocation: '/login',
     routes: [
       GoRoute(
         path: '/login',
